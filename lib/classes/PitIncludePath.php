@@ -1,6 +1,6 @@
 <?php
 
-class FWIncludePath
+class PitIncludePath
 {
   /**
    * Flush include path.
