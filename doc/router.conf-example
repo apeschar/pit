@@ -4,12 +4,12 @@
 "" -> index.index
 about -> index.about
 very-long-route
-  -> index.continues_on_next_line
-news/:id -> news.show_by_id
+  -> index.continuesOnNextLine
+news/:id -> news.showById
 
 # Specifying additional parameters for the controller (defaults)
 contact -> index.page d{"page_id" => 1}
 
 # Specifying validation rules (requirements)
-product/:id -> product.show_by_id r{"id" => "|^\d+$|"}
+product/:id -> product.showById r{"id" => "|^\d+$|"}
 
