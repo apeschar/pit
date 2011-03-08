@@ -17,9 +17,10 @@ The autoloader will look for *.php and *.class.php files.
 Using the router
 ----------------
 
-    $router = PitEasy::router('path/to/router.conf');
+    Pit::loadRoutes('path/to/router.conf');
+    $router = Pit::getRouter();
 
-PitEasy makes it very easy to initalialize the most frequently used components.
+Pit makes it very easy to initalialize the most frequently used components.
 This specific invocation will create a PitRouter object and load the speicified
 configuration file. The very concise format of this configuration file is
 demonstrated in doc/router.conf-example.
