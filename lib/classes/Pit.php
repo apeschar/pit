@@ -12,8 +12,19 @@ class Pit {
     static $router;
     if(!isset($router)) {
       $router = new PitRouter;
+      $router->setBaseURL('/');
     }
     return $router;
+  }
+
+  /**
+   * Generate an url using PitRouter
+   *
+   * @param array $params
+   * @return string
+   */
+  public static function assemble($params) {
+    return call_user_func_array(array(self::getRouter(), 'assemble'), func_get_args());
   }
   
   /**
