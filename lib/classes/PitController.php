@@ -59,5 +59,25 @@ class PitController {
     // invoke function
     return call_user_func_array(array($this, $action_method), $values);
   }
+
+  /**
+   * Redirect to URL or route.
+   *
+   * @param string $dest Destination
+   * @param array $args Arguments for URL assembly
+   * @return void
+   */
+  public function redirect($dest, array $args = array()) {
+    if(preg_match('|^@([a-z0-9_]+)\.([a-z0-9_]+)$|i', $dest, $matches)) {
+      $args = array_merge($args, array(
+        'controller' => $matches[1],
+        'action'     => $matches[2]
+      ));
+      $dest = Pit::assemble($args);
+    }
+
+    header('Location: ' . $dest);
+    exit;
+  }
 }
 
