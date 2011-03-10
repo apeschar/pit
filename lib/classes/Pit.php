@@ -2,6 +2,43 @@
 
 class Pit {
   protected static $_404file;
+  protected static $_registry = array();
+
+  /**
+   * Set registry value
+   *
+   * @param string [$ns] Namespace
+   * @param string $key Key
+   * @param string $value Value
+   * @return void
+   */
+  public static function set($ns, $key, $value = null) {
+    if(func_num_args() == 2) {
+      $value = $key;
+      $key = $ns;
+      $ns = 'DEFAULT';
+    }
+    self::$_registry[$ns][$key] = $value;
+  }
+
+  /**
+   * Get registry value
+   *
+   * @param string [$ns] Namespace
+   * @param string $key Key
+   * @return void
+   */
+  public static function get($ns, $key = null) {
+    if(func_num_args() == 1) {
+      $key = $ns;
+      $ns = 'DEFAULT';
+    }
+    if(isset(self::$_registry[$ns][$key])) {
+      return self::$_registry[$ns][$key];
+    } else {
+      return false;
+    }
+  }
 
   /**
    * Get a PitRouter object
