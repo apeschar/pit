@@ -48,7 +48,13 @@ class Pit {
    */
   public static function completeRequest() {
     // retrieve PATH_INFO
-    $path_info = isset($_SERVER['PATH_INFO']) ? $_SERVER['PATH_INFO'] : '';
+    if(isset($_SERVER['PATH_INFO'])) {
+      $path_info = $_SERVER['PATH_INFO'];
+    } elseif(isset($_SERVER['ORIG_PATH_INFO'])) {
+      $path_info = $_SERVER['ORIG_PATH_INFO'];
+    } else {
+      $path_info = '';
+    }
     $path_info = ltrim($path_info, '/');
     
     // try to route url
