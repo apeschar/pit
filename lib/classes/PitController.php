@@ -57,7 +57,26 @@ class PitController {
     }
 
     // invoke function
-    return call_user_func_array(array($this, $action_method), $values);
+    $this->beforeExecute();
+    $return = call_user_func_array(array($this, $action_method), $values);
+    $this->afterExecute();
+    return $return;
+  }
+
+  /**
+   * Perform pre-action tasks.
+   *
+   * @return void
+   */
+  protected function beforeExecute() {
+  }
+
+  /**
+   * Perform post-action tasks.
+   *
+   * @return void
+   */
+  protected function afterExecute() {
   }
 
   /**
