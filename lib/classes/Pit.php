@@ -58,16 +58,22 @@ class Pit {
    * Generate an url using PitRouter
    *
    * @param array|string $params
+   * @param array $more_params
    * @return string
    */
-  public static function assemble($params) {
+  public static function assemble($params, $more_params = array()) {
     if(is_string($params) && preg_match('|^@([a-z0-9_]+)\.([a-z0-9_]+)$|i', $params, $matches)) {
-      $params = array_merge(array(), array(
+      $params = array_merge($more_params, array(
         'controller' => $matches[1],
         'action'     => $matches[2]
       ));
     }
-    return self::getRouter()->assemble($params);
+    $url = self::getRouter()->assemble($params);
+    if($url) {
+      return $url;
+    } else {
+      throw new Exception('Pit::assemble: could not route.');
+    }
   }
   
   /**
