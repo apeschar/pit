@@ -61,7 +61,7 @@ class Pit {
    * @return string
    */
   public static function assemble($params) {
-    if(preg_match('|^@([a-z0-9_]+)\.([a-z0-9_]+)$|i', $params, $matches)) {
+    if(is_string($params) && preg_match('|^@([a-z0-9_]+)\.([a-z0-9_]+)$|i', $params, $matches)) {
       $params = array_merge(array(), array(
         'controller' => $matches[1],
         'action'     => $matches[2]
