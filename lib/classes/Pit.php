@@ -57,11 +57,17 @@ class Pit {
   /**
    * Generate an url using PitRouter
    *
-   * @param array $params
+   * @param array|string $params
    * @return string
    */
   public static function assemble($params) {
-    return call_user_func_array(array(self::getRouter(), 'assemble'), func_get_args());
+    if(preg_match('|^@([a-z0-9_]+)\.([a-z0-9_]+)$|i', $params, $matches)) {
+      $params = array_merge(array(), array(
+        'controller' => $matches[1],
+        'action'     => $matches[2]
+      ));
+    }
+    return self::getRouter()->assemble($params);
   }
   
   /**
