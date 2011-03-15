@@ -98,5 +98,15 @@ class PitController {
     header('Location: ' . $dest);
     exit;
   }
+
+  /**
+   * Output JSON and exit
+   *
+   */
+  protected function returnJSON($response) {
+    header('Content-Type: application/json');
+    echo json_encode($response);
+    exit;
+  }
 }
 
