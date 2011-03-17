@@ -4,11 +4,12 @@ class PitSession {
   /**
    * Get session variable
    *
-   * @param [$namespace] string Namespace
-   * @param $key string Key
+   * @param string [$namespace] Namespace
+   * @param string $key Key
+   * @param string $default Default
    * @return mixed
    */
-  public static function get($namespace, $key = null) {
+  public static function get($namespace, $key = null, $default = null) {
     if(func_num_args() == 1) {
       $key = $namespace;
       $namespace = 'DEFAULT';
@@ -16,7 +17,7 @@ class PitSession {
     if(isset($_SESSION['PIT']['ns'][$namespace][$key])) {
       return $_SESSION['PIT']['ns'][$namespace][$key];
     } else {
-      return null;
+      return $default;
     }
   }
 
