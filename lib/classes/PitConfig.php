@@ -8,13 +8,22 @@ class PitConfig {
    *
    * @param string $ns
    * @param string $file
+   * @param string $env
    * @return void
    */
-  public static function loadYAML($ns, $file) {
+  public static function loadYAML($ns, $file, $env = null) {
     if(!is_file($file)) {
       throw new Exception(sprintf('PitConfig: no such file: %s', $file));
     }
-    self::$_config[$ns] = sfYaml::load($file);
+    $config = sfYaml::load($file);
+    if(func_num_args() >= 3) {
+      if(!is_string($env)) {
+        throw new Exception('Environment must be string.');
+      }
+      $config = array_merge(isset($config['all']) ? $config['all'] : array(),
+                            isset($config[$env]) ? $config[$env] : array());
+    }
+    self::$_config[$ns] = $config;
   }
 
   /**
