@@ -57,9 +57,9 @@ class PitController {
     }
 
     // invoke function
-    $this->beforeExecute();
+    $this->beforeExecute($action);
     $return = call_user_func_array(array($this, $action_method), $values);
-    $this->afterExecute();
+    $this->afterExecute($action);
     return $return;
   }
 
@@ -68,7 +68,7 @@ class PitController {
    *
    * @return void
    */
-  protected function beforeExecute() {
+  protected function beforeExecute($action) {
   }
 
   /**
@@ -76,7 +76,7 @@ class PitController {
    *
    * @return void
    */
-  protected function afterExecute() {
+  protected function afterExecute($action) {
   }
 
   /**
@@ -86,7 +86,7 @@ class PitController {
    * @param array $args Arguments for URL assembly
    * @return void
    */
-  public function redirect($dest, array $args = array()) {
+  protected function redirect($dest, array $args = array()) {
     if(preg_match('|^@([a-z0-9_]+)\.([a-z0-9_]+)$|i', $dest, $matches)) {
       $args = array_merge($args, array(
         'controller' => $matches[1],
