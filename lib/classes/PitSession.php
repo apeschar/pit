@@ -40,6 +40,21 @@ class PitSession {
     }
     $_SESSION['PIT']['ns'][$namespace][$key] = $value;
   }
+ 
+  /**
+   * Delete a namespace
+   *
+   * @param string $namespace Namespace
+   * @return void
+   */
+  public static function wipeNamespace($namespace) {
+    if(!isset($_SESSION['PIT']) || !is_array($_SESSION['PIT'])) {
+      $_SESSION['PIT'] = array();
+    }
+    if(isset($_SESSION['PIT']['ns'][$namespace])) {
+      unset($_SESSION['PIT']['ns'][$namespace]);
+    }
+  }
   
   /**
    * Delete all session data
