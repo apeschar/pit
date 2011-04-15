@@ -45,5 +45,60 @@ class PitU
     }
     return true;
   }
+
+  /**
+   * Resize an image
+   *
+   * @param resource $gd
+   * @param integer $max_width
+   * @param integer $max_height
+   * @return resource
+   */
+  public static function resizeImage($src, $max_width, $max_height) {
+    $src_width = imagesx($src);
+    $src_height = imagesy($src);
+
+    // calculate new width/height
+    $dst_width = $src_width;
+    $dst_height = $src_height;
+    if($dst_width > $max_width) {
+      $frac = $max_width / $dst_width;
+      $dst_width *= $frac;
+      $dst_height *= $frac;
+    }
+    if($dst_height > $max_height) {
+      $frac = $max_height / $dst_height;
+      $dst_width *= $frac;
+      $dst_height *= $frac;
+    }
+    $dst_width = intval(round($dst_width));
+    $dst_height = intval(round($dst_height));
+
+    // resize needed?
+    if($dst_width == $src_width && $dst_height == $src_height) {
+      return $src;
+    }
+
+    // resize image
+    $dst = imagecreatetruecolor($dst_width, $dst_height);
+    imagecopyresampled($dst, $src, 0, 0, 0, 0, $dst_width, $dst_height,
+                       $src_width, $src_height);
+    imagedestroy($src);
+    return $dst;
+  }
+
+  /**
+   * Generate a random filename for a multi-level storage system
+   *
+   * e.g. 'AA/BB/CC/DEFGHIJKLMNOP'
+   *
+   * @param string $filename
+   * @return string
+   */
+  public static function randomFilename() {
+    $name = self::randomString();
+    return substr($name, 0, 2) . '/' . substr($name, 2, 2)
+           . '/' . substr($name, 4, 2) . '/' . substr($name, 6);
+  }
 }
 
